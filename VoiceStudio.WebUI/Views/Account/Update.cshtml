@@ -1,0 +1,32 @@
+﻿@model VoiceStudio.WebUI.Models.IdentityModels.UserForUpdate
+<h2>Обновление информации</h2>
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <form asp-action="Update" method="post" class="form-register">
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <input type="hidden" asp-for="Id"/>
+
+            <div asp-validation-summary="ModelOnly"></div>
+            <div class="form-group">
+                <label asp-for="Email"></label><br/>
+                <input asp-for="Email" class="form-control"/>
+                <span asp-validation-for="Email"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name"></label><br/>
+                <input asp-for="Name" class="form-control"/>
+                <span asp-validation-for="Name"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Telephone"></label><br/>
+                <input asp-for="Telephone" class="form-control"/>
+                <span asp-validation-for="Telephone"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+            </div>
+        </form>
+    </div>
+</div>

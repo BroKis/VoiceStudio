@@ -1,0 +1,65 @@
+﻿@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@using VoiceStudio.Identity.Models
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Identity
+@model IEnumerable<VoiceStudio.WebUI.Models.Outcoming.OrderForDisplay>
+@inject UserManager<ApplicationUser> UserManager;
+
+@{
+    ViewBag.Title = "Заявки";
+
+}
+@if (Model.Any())
+{
+    <div class="col-md-8 offset-md-2">
+        <h1 class="text-center">Список всех заявок</h1>
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Title)</th>
+                <th>@Html.DisplayNameFor(model => model.Link)</th>
+                <th>@Html.DisplayNameFor(model => model.OrderDate)</th>
+                <th>@Html.DisplayNameFor(model => model.Status)</th>
+                <th>@Html.DisplayNameFor(model => model.Studio)</th>
+                <th>Действия</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td class="align-middle">
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td class="align-middle">
+                        @Html.DisplayFor(modelItem => item.Link)
+                    </td>
+                    <td class="align-middle">
+                        @Html.DisplayFor(modelItem => item.OrderDate)
+                    </td>
+                    <td class="align-middle">
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td class="align-middle">
+                        @Html.DisplayFor(modelItem => item.Studio)
+                    </td>
+                    <td class="align-middle">
+                        <a class="btn btn-outline-info" asp-action="ViewActors" asp-route-id="@item.Id"><i class="bi bi-eye"></i>Подробнее об актерах </a>
+                      
+                            <a class="btn btn-outline-primary" asp-action=""
+                               asp-route-id="@item.Id">
+                                <i class="bi bi-pencil-square"></i>| Редактировать |
+                            </a>
+                        
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <p class="text-muted text-center my-5">Ващи заявки не найдены</p>
+}

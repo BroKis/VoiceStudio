@@ -1,0 +1,40 @@
+﻿@using VoiceStudio.WebUI.Models.Outcoming
+@model VoiceStudio.WebUI.Models.Outcoming.StudioForDisplayWithActors
+
+@{
+    ViewBag.Title = @Model.Title;
+
+
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col" style="padding-bottom: 10px">
+            <img src="@Model.ImagePath" width="400" height="300"/>
+        </div>
+        <div class="col" style="padding-bottom: 10px">
+            <div class="row">
+                <h5>Название:</h5>
+                <p>@Model.Title</p>
+            </div>
+            <div class="row">
+                <h5>Описание:</h5>
+                <p>@Model.Description</p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        @foreach (ActorForDisplay actor in Model.Actors)
+        {
+            <div class="col-mb-6">
+
+                <img src="@actor.ImagePath" alt="..." width="75" height="75" class="rounded-circle"/>
+
+                <a asp-action="ActorDetail" asp-controller="Actors" asp-route-id="@actor.Id" class="btn btn-outline-success">
+                    @actor.FIO
+                </a>
+
+            </div>
+        }
+    </div>
+</div>

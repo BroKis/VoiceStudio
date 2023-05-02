@@ -1,0 +1,80 @@
+﻿@model VoiceStudio.WebUI.Models.Incoming.OrderForCreate
+@{
+    ViewBag.Title = "Форма заявки на озвучку";
+
+}
+
+<style>
+    .field-validation-error {
+        color: #b94a48;
+    }
+      
+    .field-validation-valid {
+        display: none;
+    }
+      
+    input.input-validation-error {
+        border: 1px solid #b94a48;
+    }
+      
+    input[type="checkbox"].input-validation-error {
+        border: 0 none;
+    }
+      
+    .validation-summary-errors {
+        color: #b94a48;
+    }
+      
+    .validation-summary-valid {
+        display: none;
+    }
+</style>
+<section class="vh-100">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6 text-black">
+
+                <div class="px-5 ms-xl-4">
+                    <i class="fas fa-crow fa-2x me-3 pt-5 mt-xl-4" style="color: #709085;"></i>
+                </div>
+
+                <div class="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
+
+                    <form form asp-action="Create" asp-controller="Order" method="post" class="form-register">
+                        <h3 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Оформление новой заявки</h3>
+                        <div asp-validation-summary="ModelOnly"></div>
+                        <div class="form-group mb-3 text-center">
+                            <img id="ProfilePicturePreview" class="border-info" style="max-width: 350px"/>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Title"></label><br/>
+                            <input asp-for="Title" class="form-control"/>
+                            <span asp-validation-for="Title"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Link"></label><br/>
+                            <input type="text" asp-for="Link" class="form-control"/>
+                            <span asp-validation-for="Link"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="StudioId"></label><br/>
+                            <select asp-items="@(new SelectList(ViewBag.Studios, "Id", "Title"))" asp-for="StudioId" class="form-control"></select>
+                            <span asp-validation-for="StudioId"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="TypeId"></label><br/>
+                            <select asp-items="@(new SelectList(ViewBag.Genres, "Id", "Type"))" asp-for="TypeId" class="form-control"></select>
+                            <span asp-validation-for="TypeId"></span>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="padding: 10px">Внести запись об актере</button>
+                    </form>
+                </div>
+
+            </div>
+            <div class="col-sm-6 px-0 d-none d-sm-block">
+                <img src="https://cdn.fishki.net/upload/post/201406/30/1281564/19e2caa151e1649cdaa9bad47cc4e96e.jpg"
+                     alt="Login image" class="w-100 vh-100" style="object-fit: cover; object-position: left;">
+            </div>
+        </div>
+    </div>
+</section>

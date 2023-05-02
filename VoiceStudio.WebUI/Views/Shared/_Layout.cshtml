@@ -1,0 +1,149 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using VoiceStudio.Identity.Models
+@using VoiceStudio.WebUI.UserService
+@inject UserManager<ApplicationUser> UserManager;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@ViewBag.Title</title>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/VoiceStudio.WebUI.styles.css" asp-append-version="true"/>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand">
+            <img src="/images/logo.jpg" alt="" width="30" height="24"></img>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" asp-controller="Home" asp-action="Home">Домашняя</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <p class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Студии
+                    </p>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item" asp-action="StudiosView" asp-controller="Studio">Список студий</a>
+                        </li>
+                        @if (User.IsInRole(AvailableRoles.Studio))
+                        {
+                            <li>
+                                <a class="dropdown-item" asp-action="Create" asp-controller="Studio">Внести запись о новой студии</a>
+                            </li>
+                        }
+
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <p class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Актеры
+                    </p>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item" asp-action="ActorsView" asp-controller="Actors">Список актеров</a>
+                        </li>
+                        @if (User.IsInRole(AvailableRoles.Studio))
+                        {
+                            <li>
+                                <a class="dropdown-item" asp-action="Create" asp-controller="Actors">Внести данные нового актера</a>
+                            </li>
+                        }
+
+                    </ul>
+                </li>
+                @if (User.IsInRole(AvailableRoles.Studio) || User.IsInRole(AvailableRoles.Client))
+                {
+                    <li class="nav-item dropdown">
+                        <p class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Работа с заявками
+                        </p>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            @if (User.IsInRole(AvailableRoles.Studio))
+                            {
+                                <li>
+                                    <a class="dropdown-item" asp-action="OrdersForStudio" asp-controller="Order">Изменить данные заявки</a>
+                                </li>
+                            }
+
+                            @if (User.IsInRole(AvailableRoles.Client))
+                            {
+                                <li>
+                                    <a class="dropdown-item" asp-action="Create" asp-controller="Order">Подать заявку</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-action="OrdersForClient" asp-controller="Order">Просмотреть заявки</a>
+                                </li>
+                            }
+
+
+                        </ul>
+                    </li>
+                }
+                @if (User.IsInRole("Admin"))
+                {
+                    <li class="nav-item dropdown">
+                        <p class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Работа с аккаунтами
+                        </p>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li>
+                                <a class="dropdown-item" asp-action="Accounts" asp-controller="Account">Вывести список аккаунтов</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-action="RegistrationForm" asp-controller="Account">Создать новый</a>
+                            </li>
+                        </ul>
+                    </li>
+                }
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <li class="nav-item dropdown">
+                        <a class="btn btn-outline-secondary" asp-action="LoginForm" asp-controller="Account">Авторизация</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item dropdown">
+                        <p class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            @UserManager.GetUserName((User))
+                        </p>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                            <li>
+                                <a class="dropdown-item" asp-controller="Account" asp-action="Update">
+                                    Обновить аккаунт
+                                </a>
+                            </li>
+                            <li>
+                                <form asp-controller="Account" asp-action="Logout">
+                                    <button class="btn btn-outline-danger my-2 my-sm-0">
+                                        <i class="bi bi-box-arrow-in-right"></i> Выйти из аккаунта
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    @RenderBody()
+</div>
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

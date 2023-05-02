@@ -1,0 +1,38 @@
+﻿@model VoiceStudio.WebUI.Models.Outcoming.ActorForDisplay
+
+@{
+    ViewBag.Title = @Model.FIO;
+
+
+}
+
+<link rel="stylesheet" href="https://bootstraptema.ru/plugins/2015/audio-touch/audio-touch.css"/>
+<script type="text/javascript" src="https://bootstraptema.ru/plugins/jquery/jquery-1.11.3.min.js"></script>
+<section>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <img src="@Model.ImagePath" width="500" height="300"/>
+        </div>
+        <div class="col">
+            <div class="row" style="display: flex">
+                <h5>ФИО:</h5>
+                <p>@Model.FIO</p>
+            </div>
+            <div class="row" style="display: flex">
+                <h5>Дата рождения</h5>
+                <p>@Model.BirthDate.Value.ToString("dd/MM/yy");</p>
+            </div>
+            <div class="row" style="display: flex">
+                <h5>Место работы</h5>
+                Студия:
+                <p>@Model.Studio</p>
+            </div>
+            <div class="row">
+                <h5>Биография:</h5>
+                <p>@Model.Biography</p>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
